@@ -7,12 +7,12 @@ export const useCocktailListStore = defineStore('cocktailList', () => {
   const cocktailList = ref<Record<string, ICocktail[]>>({});
   const isLoading = ref(false);
 
-  const getCocktailList = async (cocktail: string) => {
+  const getCocktailList = async (cocktail: string, signal?: AbortSignal) => {
     isLoading.value = true;
     if (!cocktailList.value[cocktail]) {
 
       try {
-        const data = await fetchCocktailByName(cocktail);
+        const data = await fetchCocktailByName(cocktail, signal);
         if (data) {
           cocktailList.value[cocktail] = data.drinks;
         }
